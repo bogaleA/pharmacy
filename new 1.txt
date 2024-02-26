@@ -1,0 +1,507 @@
+<?php
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="loginn";
+$conn= mysqli_connect($servername, $username, $password, $dbname);
+//echo("connection");
+if(isset($_POST['Login'])) {
+     $user=$_POST['uname'];
+     $pass=$_POST['pasw'];
+     $usertype=$_POST['suname'];
+$query="SELECT * FROM `users` WHERE username='".$user."' and password='".$pass."' and usertype='".$usertype."'";
+$result = mysqli_query($conn,$query);
+if($result){
+while($row=mysqli_fetch_array($result)){
+echo'<script type="text/javascript">alert("you are login successfully and you logined as ' .$row['usertype'].'")</script>';
+}
+if($usertype=="Admin"){
+?>
+<script type="text/javascript">window.location.href="home.php"</script>
+<?php
+}
+else if($usertype=="Physician"){
+?>
+<script type="text/javascript">window.location.href="#"</script>
+<?php
+}
+else if($usertype=="Pharmacist"){
+?>
+<script type="text/javascript">window.location.href="#"</script>
+<?php
+}
+else if($usertype=="Store Cordinator"){
+?>
+<script type="text/javascript">window.location.href="#"</script>
+<?php
+}
+else if($usertype=="Casher"){
+?>
+<script type="text/javascript">window.location.href="#"</script>
+<?php
+}
+else{
+?>
+<script type="text/javascript">alert("you are incorrectlly logined pleace check all your box")</script>
+<?php	
+}
+}
+else{
+echo'no result';
+}
+}
+?>
+=========================================================================================================================================
+
+
+<?php
+//session_start();
+$servernam="localhost:3307";
+$usernam="root";
+$password="";
+$dbname="logo";
+$con=mysqli_connect($servernam, $usernam, $password, $dbname);
+if(!$con)
+{
+	echo"unable to establish connection".mysqli_error($con);
+	
+}
+
+$db=mysqli_select_db($con,"logo");
+if(!$db){
+	echo"Database no found".mysqli_error($con);
+}
+if(isset($_POST['Login'])) {
+     $user=$_POST['uname'];
+     $pass=$_POST['pasw'];
+     $usertype=$_POST['suname'];
+$query="SELECT * FROM `use` WHERE username='$user' and password='$pass' and usertype='$usertype'";
+$result=mysqli_query($con,$query);
+
+while($row=mysqli_fetch_array($result)){
+	
+	if($row['username']==$user && $row['password']==$pass && $row['usertype']=='Admin')
+	{
+		header("location: home.php");
+	}
+	elseif($row['username']==$user && $row['password']==$pass && $row['usertype']=='Physician')
+	{
+		header("location: homepd.php");
+	}
+	elseif($row['username']==$user && $row['password']==$pass && $row['usertype']=='Pharmacist')
+	{
+		header("location: homephr.php");
+	}
+	elseif($row['username']==$user && $row['password']==$pass && $row['usertype']=='StoreCoordinater')
+	{
+			header("location: homesc.php");
+	}
+	elseif($row['username']==$user && $row['password']==$pass && $row['usertype']=='Casher')
+	{
+		header("location: homec.php");
+	}
+	
+	else{
+echo"<script>  
+alert('wrong user name, password and role or somthing error!');window.location:'login.php';
+</script>";
+header( "location:login.php?error" );
+        }
+	
+}
+
+}
+?>
+==============================
+$update_query = "UPDATE `adds` SET Fname='$info[1]',Lname='$info[2]',Email='$info[3]',passw='$info[4]',role='$info[5]',date='$info[6]'age='$info[7]' WHERE id = '$info[0]'";
+=============================================================================================
+
+
+<header> 
+<span class="logo"> <img src="logo.jpg"></span>
+<span class="logo"><img src="hom.png"></span>
+<span class="logo"> <img src="ppppph.jpg"style="margin-left: -37px;"></span>
+</header>
+
+
+=================================================================
+if(isset($_POST['subm'])){
+	$id=$_POST['id'];
+	$fname=$_POST['fname'];
+	$lname=$_POST['lname'];
+	$email=$_POST['email'];
+	$pas=$_POST['paw'];
+	$rol=$_POST['role'];
+	$dat=$_POST['date'];
+	$age=$_POST['age'];
+$result=mysqli_query($conn,"INSERT INTO adds (id,Fname, Lname, Email, passw, role, date, Age) VALUES ('$id','$fname','$lname','$email','$pas','$rol','$dat','$age')");
+	if($result){
+		echo"you are added successfuly! bravo!!!";
+	}
+	else{
+		echo"field";
+	}
+}
+==========================
+<input type="submit"name="update"value="Update user"style="background-color:#803399;color:white;font-weight: bold;font-size: 18px;" >
+	  <input type="submit"name="delete"value="Delete user"style="background-color:#803399;color:white;font-weight: bold;font-size: 18px;" >
+	  =============================
+	  ==================
+	 <?php
+include("config.php");
+
+?>
+<?php
+if(!$conn){
+	echo"not connect";}
+if(isset($_POST['update'])){
+	$id=$_POST['id'];
+	$fname=$_POST['fname'];
+	$lname=$_POST['lname'];
+	$email=$_POST['email'];
+	$pas=$_POST['paw'];
+	$rol=$_POST['role'];
+	$dat=$_POST['date'];
+	$age=$_POST['age'];
+	$sql="UPDATE adds SET Fname='$_POST[fname]',Lname='$_POST[lname]',Email='$_POST[email]',passw='$_POST[paw]',role='$_POST[role]',age='$_POST[age]',date='$_POST[date]' WHERE id='$_POST[id]'";
+     $query=mysqli_query($conn,$sql);
+	 if($query){
+		 echo"<script>  
+alert('data updated successfully!');
+header('window.location: update.php');
+</script>";
+	 }else{
+		echo"<script>  
+alert('not updated!');
+header('window.location: delete.php');
+</script>";
+	 }
+}
+?>
+
+
+<?php
+if(isset($_POST['update'])){
+$select="SELECT * FROM adds WHERE id='[$id]'";
+$query=mysqli_query($conn,$select);
+if(!$query){
+	echo"<script>  
+alert('not updated!');
+header('window.location: delete.php');
+</script>";
+}
+}
+?>
+
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="iner.css" type="text/css">
+
+<title>
+pharmacy information system-home
+</title>
+<style type="text/css">
+#clock {
+width: 900px;
+text-align: left;
+font-size: 50px;
+margin-top: 0px;
+
+}
+</style>
+</head>
+
+<body style="background:#4dffff;">
+
+<div class="menu"style="width: 1328px;">
+<ul>
+  <li class="active"><a href="home.php">Home</a>
+  
+ <ul><li><a href="#">Login Detail<a></li>
+  <li><a href="#">Change Passw<a></li>
+  <li><a href="logout.php">Logout<a></li>
+  <li><a href="#">About PIS<a></li>
+  
+  </ul></li>
+  <li><a href="#">Purchase</a><ul><li><a href="#">Income Drug<a></li>
+  <li><a href="#">ComeOut Drug<a></li>
+  <li><a href="#">Sale Drug<a></li>
+  <li><a href="#">Edit Drug<a></li>
+  
+  </ul></li>
+  <li><a href="#">Drug details</a><ul><li><a href="#">Expired Drug<a></li>
+  <li><a href="#">Stock Out<a></li>
+  <li><a href="#">Prescribe Drug<a></li>
+  <li><a href="#">Move Drug<a></li>
+  <li><a href="#">Drug List<a></li>
+  </ul></li>
+  <li><a href="#">Drug</a><ul><li><a href="#">Add Drug<a></li>
+  <li><a href="#">Delet Drug<a></li>
+  <li><a href="#">Update Drug<a></li>
+  <li><a href="#">Search Drug<a></li>
+  <li><a href="#">Dispanse Drug<a></li>
+  </ul></li>
+  <li><a href="#">Manage user</a><ul>
+  <li><a href="add.php">Add user<a></li>
+  <li><a href="update.php">Update user<a></li>
+  <li><a href="delete.php">Delete user<a></li>
+  <li><a href="#">GenerateReport<a></li>
+  </ul></li>
+</ul>
+</div> 
+
+
+<form action="update.php" method="post"style="text-align: center;">
+
+<br><br>
+First Name <input type="text"name="fname">
+<br>
+<br>
+<br>
+Last Name<input type="text" name="lname">
+<br>
+<br>
+<br>
+Email <input type="email" name="email">
+<br>
+<br>
+<br>
+
+Password <input type="password" name="paw">
+<br>
+<br>
+<br>
+Role<select name="role"> 
+<option value="select role">  select role</option>
+<option value="Admin">  Admin</option>
+<option value="Physician"> Physician </option>
+<option value="Pharmacist"> Pharmacist </option>
+<option value="storeCoordinater"> StoreCoordinater </option>
+<option value="Casher"> Casher </option>
+</select> ID Number<input type="number" name="id" required placeholder="id">
+<br>
+<br>
+<br>
+<br>
+Date<input type="date" name="date">
+<br>
+<br>
+<br>
+Age <input type="number" name="age"min="15"max="100">
+<br>
+<br>
+
+<div>  <span> <a href="search.php"> Search ID</a></span>
+	  <input type="submit"name="update"value="Update user"style="background-color:#803399;color:white;font-weight: bold;font-size: 20px;" >
+	  
+</div>
+<div id="clock">10:10:01</div>
+<script type="text/javascript">
+setInterval(displayclock, 500);
+function displayclock(){
+	var time = new Date();
+	var hrs = time.getHours();
+	var min = time.getMinutes();
+	var sec = time.getSeconds();
+	if(hrs > 12){
+		hrs = hrs - 12;
+	}
+	if(hrs == 0){
+		hrs == 12;
+	}
+	document.getElementById('clock').innerHTML = hrs + ':' + min + ':' +sec;
+}
+</script>
+
+
+</form>
+
+</body>
+
+
+</html>
+
+
+
+]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+<tr> <td style="padding-top: 60px;"><span style="font-weight: bold;font-size: 15px;font-style: italic;color:red;">Note: Password should be more then 6 digit!</span></td></tr> 
+
+
+
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+</fieldset>
+<?php
+$conn=mysqli_connect($servernam, $usernam, $password, $dbname);
+if(!$conn)
+{ echo"not connect";}
+    
+	$mrn=$rows['mrn'];
+	$pfname=$rows['fname'];
+	$psname=$rows['sname'];
+	$age=$rows['age'];
+	$gender=$rows['gender'];
+	$phonum=$rows['phnu'];
+	$kebele=$rows['kbl'];
+	$wereda=$rows['wrd'];
+	$zone=$rows['zon'];
+	$diagno=$rows['dgn'];
+	$ndrug=$rows['drug'];
+	$fname=$rows['pname'];
+	$lname=$rows['lpname'];
+	$quali=$rows['qual'];
+	$sign=$rows['sign'];
+	$date=$rows['date'];
+
+function getData(){
+	$data = array();
+	$data[0]=$_POST['mrn'];
+	$data[1]=$_POST['fname'];
+	$data[2]=$_POST['sname'];
+	$data[3]=$_POST['age'];
+	$data[4]=$_POST['gender'];
+	$data[5]=$_POST['phnu'];
+	$data[6]=$_POST['kbl'];
+	$data[7]=$_POST['wrd'];
+	$data[8]=$_POST['zon'];
+	$data[9]=$_POST['dgn'];
+	$data[10]=$_POST['arug'];
+	$data[11]=$_POST['pname'];
+	$data[12]=$_POST['lpname'];
+	$data[13]=$_POST['qual'];
+	$data[14]=$_POST['sign'];
+	$data[15]=$_POST['date'];
+	return $data;
+}
+if(isset($_POST['submit'])){
+	$info = getData();
+$dispanse="SELECT * FROM `prescrib` WHERE id = '$info[0]'";
+$dispanse_result=mysqli_query($conn, $dispanse);
+if($search_result){
+	if(mysqli_num_rows($search_result)){
+		while($rows = mysqli_fetch_array($dispanse_result)){
+			$mrn=$rows['mrn'];
+	$pfname=$rows['fname'];
+	$psname=$rows['sname'];
+	$age=$rows['age'];
+	$gender=$rows['gender'];
+	$phonum=$rows['phnu'];
+	$kebele=$rows['kbl'];
+	$wereda=$rows['wrd'];
+	$zone=$rows['zon'];
+	$diagno=$rows['dgn'];
+	$ndrug=$rows['drug'];
+	$fname=$rows['pname'];
+	$lname=$rows['lpname'];
+	$quali=$rows['qual'];
+	$sign=$rows['sign'];
+	$date=$rows['date'];
+		}
+	}
+	else{
+		echo"<script>  
+alert('no data available!');
+header('window.location: search.php');
+</script>";
+	}
+}
+else{
+	echo"result error";
+}
+
+}
+if(isset($_POST['submit'])){
+	
+$result=mysqli_query($conn,"INSERT INTO prescrib (MRN, pfname, psname, age, gender, Phonenumber, kebele, wereda,
+ zone, diagnosis, namedrug, fname, lname, qualifcation, sign, date) VALUES ('$mrn','$pfname','$psname','$age','$gender','$phonum','$kebele','$wereda',
+ '$zone','$diagno','$ndrug','$fname','$lname','$quali','$sign','$date')");
+	if($result){
+		echo"<script>  
+alert('you are dispansed succssfully!');
+header('window.location: disp_sear.php');
+</script>";
+	}
+	else{
+		echo"<script>  
+alert('you are not dispansed correctly! please cheak it');
+header('window.location: disp_sear.php');
+</script>";
+	}
+}
+?>
+
+
+
+<th>MRN</th>
+<th>patientFname </th>
+<th>patienLname </th>
+<th> Age</th>
+<th> Gender</th>
+<th> NameOfgDrug</th>
+<th>Phonenumber</th>
+<th>kebele </th>
+<th>wereda </th>
+<th> zone</th>
+<th> diagnosis</th>
+<th>prescribrsFname </th>
+<th>LastName </th>
+<th> qualifcation</th>
+<th> signature</th>
+<th> date</th>
+<th></th>
+</tr>
+<?php
+while($row = mysqli_fetch_array($records_result)){
+	echo "<tr style='width:50%'><form action='disp_sear.php'method='post'>";
+	echo"<td><input type=text name=mrn value='".$row['MRN']."'></td>";
+	echo"<td ><input type=text name=fname value='".$row['pfname']."'></td>";
+	echo "<td><input type=text name=sname value='".$row['psname']."'></td>";
+	echo "<td><input type=text name=age value='".$row['age']."'></td>";
+	echo "<td><input type=text name=gender value='".$row['gender']."'></td>";
+	echo "<td><input type=text name=drug value='".$row['namedrug']."'></td>";
+	echo"<td><input type=text name=phnu value='".$row['Phonenumber']."'></td>";
+	echo"<td ><input type=text name=kbl value='".$row['kebele']."'></td>";
+	echo "<td><input type=text name=wrd value='".$row['wereda']."'></td>";
+	echo "<td><input type=text name=zon value='".$row['zone']."'></td>";
+	echo "<td><input type=text name=dgn value='".$row['diagnosis']."'></td>";
+	echo "<td><input type=text name=pname value='".$row['fname']."'></td>";
+	echo "<td><input type=text name=lpname value='".$row['lname']."'></td>";
+	echo "<td><input type=text name=qual value='".$row['qualifcation']."'></td>";
+	echo "<td><input type=text name=sign value='".$row['sign']."'></td>";
+	echo "<td><input type=text name=date value='".$row['date']."'></td>";
+	echo "<td><input type=submit name=subm value='Submit'></td>";
+	echo "</form></tr>";
+	
+	
+	
+	
+	
+	
+	mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+	
+	$frn=$_POST['dname'];
+	$lan=$_POST['dpname'];
+	$sig=$_POST['sig'];
+	$qua=$_POST['qua'];
+	$date=$_POST['date'];
+	
+	
+	
+	
+	"INSERT INTO dispens (MRN, pfname, psname, age, gender, Phonenumber, kebele, wereda, zone, diagnosis,
+ namedrug, fname, lname, qualification, sign, date, strength, dosageForm, dosag, duration, frequancy, quantity, dfname, dlname,
+ signa, quality, dat) VALUES ('$mrn','$pfname','$psname','$age','$gender','$phnu','$kebele','$wereda','$zone','$diagno','$ndrug',
+ '$fname','$lname','$quali','$sign','$date','$strg','$dosagf','$dosag','$dura','$frequ','$quntiy','$frn','$lan','$sig','$qua','$date')"
+ 
+ 
+ 
+ <u><b>Dispenser's</b></u><br><br>
+first name<input type="text" name="dname"required>
+last name<input type="text" name="dpname"required>
+signature<input type="text" name="sig"required><br><br><br>
+Qualification<select name="qua">
+<option value="Pharmacist"> Pharmacist</option>
+</select>
+	
+	

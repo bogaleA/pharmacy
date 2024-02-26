@@ -1,0 +1,116 @@
+*{
+	padding:0px
+	margin:0px;
+	box-sizing: border-box;
+}
+header span
+{
+	
+	display: inline-flex;
+}
+header{
+	background-color:  #339933;
+	
+	
+}
+h1 {
+	width: 80.33%;
+	//padding: -1px;
+	
+}
+
+.logo
+{
+	padding-right: 0px;
+	padding-top: 0px;
+	//margin-left: 0px;
+	margin-top: -1px;
+}
+
+
+body
+{
+	background-size: cover;
+border: 12px solid #000000;
+background-color: #66d9ff;
+background-position: center;
+margin:-1px;
+
+font-family: sans-serif;
+}
+.menu {
+	background-color: #3366cc;
+	width: 1300px;
+	margin: -1px auto;
+}
+.menu ul{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	
+}
+.menu ul li{
+	display: inline-block;
+	position: relative;
+	margin-right: 20px;
+	margin-left: 100px;
+	border: 2px solid #b3cccc;
+	padding: -10px;
+	//padding-top: 5px;
+	
+}
+
+
+.menu ul li a{
+	color: 	#000000;
+	padding: 10px 20px;
+	display: block;
+	text-decoration:none;
+	font-weight: bold;
+	font-size: 20px;
+	background: #e6e6ff;
+	
+}
+
+/* let,s go we make this style*/
+.menu ul li ul{
+	position: absolute;
+	background-color: #ff9900;
+	width: 150px;
+	opacity: 0;
+	visibility: hidden;
+	margin-top: 5px;
+    padding-bottom: -10px;
+	
+}
+.menu ul li:hover ul{
+	opacity: 1;
+	visibility: visible;
+	
+}
+.menu ul li ul li{
+	display: block;
+	margin-right: 0px;
+	margin-left: 0px;
+	border-style: hidden;
+	
+  
+}
+.menu ul li ul li a{
+	padding: 5px;
+	text-align: center;
+	color: #000000;
+	margin-bottom: -1px;
+	font-weight: normal;
+	font-size: 14px;
+	background: #ff9900;
+}
+.active, .menu ul li:hover{
+	background: #ff99ff;
+	border-radius: 5px;
+	padding: 5px;
+	
+}
+#dff tr{
+	width: 20px;
+}
